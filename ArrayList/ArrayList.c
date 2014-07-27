@@ -41,6 +41,12 @@ void main(){
     int pos = locateElem(&arrayList,&data,arrayCompare);
     printf("The pos is %d\n",pos);
 
+    int dataDelete = -1;
+    result = deleteElem(&arrayList,2,&dataDelete);
+    printf("The delete data is %d, the lenght is %d\n",dataDelete,arrayList.length);
+    
+
+
 
 }
 
@@ -141,3 +147,34 @@ state insertElem(spList* L, int pos, void * data){
     return StateOK;
 }
 
+
+state deleteElem(spList* L, int pos, void* data){
+    size_t typesize = 0;
+    switch(L->type){
+        case INT_TYPE:
+            typesize = sizeof(int);
+        break;
+        default:
+        break;
+    }
+
+    if ((pos < 1) || (pos > L->length)){
+        return StateError;
+    }
+    void *p = L->data + (pos-1) * typesize;
+    *((int*)data) = *((int*)p);
+    void* q = L->data + (L->length -1) * typesize;
+
+    for(p += typesize; p <= q; p += typesize){
+        switch(L->type){
+            case INT_TYPE:
+                *((int*)p -1) = *((int*)p);
+            break;
+            default:
+            break;
+        }
+    }
+
+    --L->length;
+    return StateOK;
+}

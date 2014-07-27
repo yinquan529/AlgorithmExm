@@ -27,7 +27,7 @@ typedef int (*Compare)(void* data1, void* data2, storetype type);
 state initList(spList* L, storetype type);
 int locateElem(spList* L, void* data, Compare compare);
 state insertElem(spList* L, int pos, void* data);
-void deleteList();
+state deleteElem(spList* L, int pos, void* data);
 void getList();
 
 
